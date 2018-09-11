@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <title>Flight Scheduler</title>
+</head>
+<body onload="loadInfo()">
+    <!-- I set up a folder with Web Server for Chrome and created this HTML flight scheduler- arrivals -->
+    <!-- The <div> below will not show the content. The content will be loaded from github JSON file. -->
+    <div id="allin">
+        <h1 id="heading">Arrivals</h1>
+        <span id="span1"></span>
+    </div>
+    <script>
+            /* This code loads flights.json data from GITHU URL and loops through the content.*/
+            /* I tried to use local JSON file. But Chrome and my antivirus are showing CORB message. I tested this site for offline 
+            functionality and it reloads smooth. ChromeDev => Application => Check Offline and reload. It should reload successful*/
+            function loadInfo(){
+                var xhr = new XMLHttpRequest();
+                const URL = 'https://raw.githubusercontent.com/abdillahi09/PWC-First-Assignment/master/flights.json'
+                xhr.open('GET',URL,true);
+                xhr.onload = function(){
+                    var users = JSON.parse(this.responseText);
+                    var output = "";
+                    /* This loop iterates over the flights.json file and extracts the data to the <span> tag*/
+                    for(var i in users){
+                     output+= 
+                        '<div class=users>'+
+                        '<span id="destination">'+users[i].from + " to " + users[i].to +'</span>'+
+                            '<div id="secondline>'+
+                                '<span id="time">'+users[i].time+'</span>'+ "  "+
+                                '<span id="status">'+users[i].status+'</span>'+
+                            '</div>'+
+                        '</div>';
+                    }
+                    document.getElementById('span1').innerHTML=output;
+                }
+                xhr.send();
+            }
+    </script>
+</body>
+</html>
+
